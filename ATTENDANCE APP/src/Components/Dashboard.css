@@ -1,0 +1,136 @@
+.dashboard-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.dashboard-header {
+    margin-bottom: 30px;
+}
+
+.dashboard-title {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.dashboard-subtitle {
+    font-size: 1rem;
+    color: #666;
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 900px;
+}
+
+.dashboard-date-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: fit-content;
+}
+
+.date-label {
+    font-weight: 500;
+    color: #333;
+}
+
+.date-input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    color: #333;
+}
+
+/* Metrics Grid - 2x2 Layout */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 2 equal columns */
+    gap: 20px;
+}
+
+.metric-card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 110px;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.metric-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-label {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.metric-value {
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.metric-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Card Specific Colors */
+.metric-card.total .metric-icon {
+    background-color: #e3f2fd;
+    /* Light Blue */
+    color: #2196f3;
+}
+
+.metric-card.present .metric-icon {
+    background-color: #e8f5e9;
+    /* Light Green */
+    color: #4caf50;
+}
+
+.metric-card.absent .metric-icon {
+    background-color: #ffebee;
+    /* Light Red */
+    color: #f44336;
+}
+
+/* Purple for Average Attendance */
+.metric-card.average .metric-icon {
+    background-color: #f3e5f5;
+    /* Lavender */
+    color: #9c27b0;
+    /* Purple */
+}
+
+/* Responsive: stack to single column on small screens */
+@media (max-width: 768px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+}

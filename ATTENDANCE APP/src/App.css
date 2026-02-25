@@ -1,0 +1,13 @@
+/* App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  /* Ensure content doesn't overflow horizontally */
+  overflow-x: hidden;
+}

@@ -1,0 +1,232 @@
+.attendance-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- Header Card --- */
+.attendance-header-card {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    /* Responsive wrap */
+    gap: 15px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.header-date-input {
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.stats-container {
+    display: flex;
+    gap: 20px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.stat-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.green {
+    background-color: #00c853;
+}
+
+.dot.red {
+    background-color: #ff1744;
+}
+
+.btn-save {
+    background-color: #2962ff;
+    /* Bright Blue */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.btn-save:hover {
+    background-color: #0039cb;
+}
+
+/* --- Page Title --- */
+.page-title-section {
+    margin-bottom: 20px;
+}
+
+.page-title-section h3 {
+    font-size: 1.1rem;
+    color: #444;
+    font-weight: 500;
+}
+
+/* --- Student List --- */
+.student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.student-card {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(6, 182, 35, 0.05);
+    /* Very subtle shadow for clean look */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #f0f0f0;
+    /* Light border */
+}
+
+/* Left: Avatar + Info */
+.student-info-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.student-avatar {
+    width: 45px;
+    height: 45px;
+    background-color: #e3f2fd;
+    /* Light Blue Bg */
+    color: #2196f3;
+    /* Blue Text */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.student-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.student-name {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.student-class {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* Right: Actions */
+.attendance-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.attendance-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    min-width: 120px;
+    /* Fixed width for alignment */
+    justify-content: center;
+}
+
+/* Present Button */
+.attendance-toggle.present {
+    background-color: #f1f3f4;
+    /* Gray default */
+    color: #5f6368;
+}
+
+.attendance-toggle.present.active {
+    background-color: #00c853;
+    /* Success Green */
+    color: white;
+    /* font-weight: 600; */
+}
+
+/* Absent Button */
+.attendance-toggle.absent {
+    background-color: #f1f3f4;
+    color: #5f6368;
+}
+
+.attendance-toggle.absent.active {
+    background-color: #ff1744;
+    /* Error Red */
+    color: white;
+    /* font-weight: 600; */
+}
+
+/* Hover Effects */
+.attendance-toggle:not(.active):hover {
+    background-color: #e0e0e0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .attendance-header-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .student-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .attendance-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

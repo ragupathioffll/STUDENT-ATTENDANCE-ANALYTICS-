@@ -1,0 +1,127 @@
+/* Navbar.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    height: 64px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.brand-logo-container {
+    background-color: #2563eb;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.nav-link:hover {
+    color: #000000;
+    background-color: #f3f4f6;
+}
+
+.nav-link.active {
+    color: #2563eb;
+    background-color: #eff6ff;
+}
+
+/* Profile Section */
+.navbar-profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-info {
+    text-align: right;
+    line-height: 1.2;
+}
+
+.user-name {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.user-role {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    background-color: #dbeafe;
+    color: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #f3f4f6;
+    color: #ef4444;
+}
