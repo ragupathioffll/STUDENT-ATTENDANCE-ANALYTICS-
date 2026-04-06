@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:5001/api';
 
 const getHeaders = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     return {
         'Content-Type': 'application/json',
         'x-auth-token': token || ''

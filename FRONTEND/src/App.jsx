@@ -8,11 +8,14 @@ import Reports from './Components/Reports';
 import Login from './Components/Login';
 import { apiService } from './api/service';
 
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem('token') !== null
+    !!(localStorage.getItem('token') || sessionStorage.getItem('token'))
   );
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [activeTab, setActiveTab] = useState('dashboard');
   const [students, setStudents] = useState([]);
   const [attendanceData, setAttendanceData] = useState({});
@@ -47,14 +50,29 @@ function App() {
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = (data, remember) => {
+    const storage = remember ? localStorage : sessionStorage;
+    const otherStorage = remember ? sessionStorage : localStorage;
+
+    storage.setItem('token', data.token);
+    storage.setItem('user', JSON.stringify(data.user));
+
+    otherStorage.removeItem('token');
+    otherStorage.removeItem('user');
+
+    setUser(data.user);
     setIsAuthenticated(true);
+    setActiveTab('dashboard');
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setUser(null);
+    setActiveTab('dashboard');
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
   };
 
   const renderContent = () => {
@@ -80,7 +98,12 @@ function App() {
 
   return (
     <div className="app-container">
-      <Navbar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
+      <Navbar
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        onLogout={handleLogout}
+        user={user}
+      />
       <main className="main-content">
         <div className="container">
           {renderContent()}

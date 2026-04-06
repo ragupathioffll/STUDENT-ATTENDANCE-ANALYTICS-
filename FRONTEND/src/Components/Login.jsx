@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GraduationCap, Mail, Lock, AlertCircle } from 'lucide-react';
+import { GraduationCap, Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { apiService } from '../api/service';
 import './Login.css';
 
@@ -8,6 +8,8 @@ const Login = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,9 +18,7 @@ const Login = ({ onLogin }) => {
 
         try {
             const data = await apiService.login(email, password);
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-            onLogin();
+            onLogin(data, rememberMe);
         } catch (err) {
             setError(err.message || 'Invalid email or password');
         } finally {
@@ -41,7 +41,7 @@ const Login = ({ onLogin }) => {
 
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="form-group">
-                        <label htmlFor="email">Email Address</label>
+                        <label htmlFor="email">User ID / Email Address</label>
                         <div className="input-wrapper">
                             <Mail className="input-icon" size={20} />
                             <input
@@ -60,22 +60,33 @@ const Login = ({ onLogin }) => {
                         <div className="input-wrapper">
                             <Lock className="input-icon" size={20} />
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 id="password"
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                                tabIndex="-1"
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
                         </div>
                     </div>
 
                     <div className="form-options">
                         <label className="remember-me">
-                            <input type="checkbox" />
+                            <input
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.target.checked)}
+                            />
                             <span>Remember me</span>
                         </label>
-                        <a href="#forgot" className="forgot-password">Forgot password?</a>
                     </div>
 
                     {error && (

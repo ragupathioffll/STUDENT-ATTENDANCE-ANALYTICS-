@@ -2,7 +2,17 @@ import React from 'react';
 import './Navbar.css';
 import { LayoutDashboard, Users, ClipboardCheck, FileText, LogOut, GraduationCap } from 'lucide-react';
 
-const Navbar = ({ activeTab, onTabChange, onLogout }) => {
+const Navbar = ({ activeTab, onTabChange, onLogout, user }) => {
+    const getUserInitials = () => {
+        if (!user || !user.name) return '??';
+        return user.name
+            .split(' ')
+            .map(n => n[0])
+            .join('')
+            .toUpperCase()
+            .slice(0, 2);
+    };
+
     const tabs = [
         { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { id: 'students', label: 'Students', icon: Users },
@@ -38,10 +48,10 @@ const Navbar = ({ activeTab, onTabChange, onLogout }) => {
 
             <div className="navbar-profile">
                 <div className="user-info">
-                    <span className="user-name">Mr. John Smith</span>
-                    <span className="user-role">Teacher</span>
+                    <span className="user-name">{user?.name || 'User'}</span>
+                    <span className="user-role">{user?.role || 'Staff'}</span>
                 </div>
-                <div className="avatar">JS</div>
+                <div className="avatar">{getUserInitials()}</div>
                 <button className="logout-btn" title="Logout" onClick={onLogout}>
                     <LogOut size={20} />
                 </button>
