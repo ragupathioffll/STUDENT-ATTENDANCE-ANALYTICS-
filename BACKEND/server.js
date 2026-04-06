@@ -18,19 +18,28 @@ const PORT = process.env.PORT || 5001;
 // Middleware
 const allowedOrigins = [
     process.env.FRONTEND_URL,
+    'https://studentattendanceanalytics.vercel.app',
     'http://localhost:5173',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    /\.vercel\.app$/ 
 ].filter(Boolean);
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (!origin) return callback(null, true);
+        const isAllowed = allowedOrigins.some(pattern => {
+            if (pattern instanceof RegExp) return pattern.test(origin);
+            return pattern === origin;
+        });
+        if (isAllowed) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
 }));
 app.use(express.json());
 
