@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'https://student-attendance-analytics-1.onrender.com/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://student-attendance-analytics-2.onrender.com/api';
 
 const getHeaders = () => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
