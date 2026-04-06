@@ -16,8 +16,19 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Middleware
+const allowedOrigins = [
+    'https://student-attendance-analytics-22g6.vercel.app',
+    'http://localhost:5173'
+];
+
 const corsOptions = {
-    origin: 'https://student-attendance-analytics-22g6.vercel.app',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
     credentials: true,
