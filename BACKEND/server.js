@@ -16,7 +16,15 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:5173', // Local Vite development
+        'https://student-attendance-analytics-22g6.vercel.app' // Vercel production frontend
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'x-auth-token']
+}));
 app.use(express.json());
 
 // Database Connection
