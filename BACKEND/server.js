@@ -16,29 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Middleware
-const allowedOrigins = [
-    'https://student-attendance-analytics-22g6.vercel.app',
-    'https://student-attendance-analytics.vercel.app',
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'http://127.0.0.1:5173'
-];
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(null, false); // Fail silently instead of crashing with 500 error
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
-    credentials: true,
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight requests
+app.use(cors());
 app.use(express.json());
 
 // Database Connection
