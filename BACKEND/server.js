@@ -18,7 +18,10 @@ const PORT = process.env.PORT || 5001;
 // Middleware
 const allowedOrigins = [
     'https://student-attendance-analytics-22g6.vercel.app',
-    'http://localhost:5173'
+    'https://student-attendance-analytics.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://127.0.0.1:5173'
 ];
 
 const corsOptions = {
@@ -26,7 +29,7 @@ const corsOptions = {
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+            callback(null, false); // Fail silently instead of crashing with 500 error
         }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
