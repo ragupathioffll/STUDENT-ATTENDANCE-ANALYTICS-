@@ -16,20 +16,35 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #000000;
 }
 
 .brand-logo-container {
     background-color: #2563eb;
     color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.2;
 }
 
 .navbar-nav {
@@ -50,24 +65,25 @@
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    border-radius: 6px;
+    border-radius: 20px;
     font-size: 0.95rem;
     font-weight: 500;
-    color: #6b7280;
+    color: #64748b;
     transition: all 0.2s ease;
     cursor: pointer;
     background: none;
-    border: none;
+    border: 1px solid transparent;
 }
 
 .nav-link:hover {
-    color: #000000;
-    background-color: #f3f4f6;
+    color: #1e293b;
+    background-color: #f8fafc;
 }
 
 .nav-link.active {
     color: #2563eb;
-    background-color: #eff6ff;
+    background-color: #ffffff;
+    border: 1px solid #1e293b;
 }
 
 /* Profile Section */

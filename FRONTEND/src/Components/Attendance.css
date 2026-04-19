@@ -107,15 +107,57 @@
 
 .student-card {
     background: white;
-    padding: 15px 25px;
+    padding: 20px 25px;
     border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(6, 182, 35, 0.05);
-    /* Very subtle shadow for clean look */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.student-card.absent-mode {
+    border-color: #fecaca;
+    background-color: #fffafb;
+}
+
+.student-main-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #f0f0f0;
-    /* Light border */
+    width: 100%;
+}
+
+.reason-input-section {
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.reason-box {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #374151;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+}
+
+.reason-box:focus {
+    border-color: #ff1744;
+}
+
+.animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Left: Avatar + Info */

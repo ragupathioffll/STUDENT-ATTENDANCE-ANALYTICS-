@@ -1,0 +1,188 @@
+.leave-requests-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Inter', sans-serif;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.leave-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.leave-header h1 {
+    font-size: 28px;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.leave-header p {
+    color: #64748b;
+    font-size: 15px;
+}
+
+.btn-apply-leave {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-apply-leave:hover {
+    background: #059669;
+}
+
+.form-panel {
+    margin-bottom: 30px;
+}
+
+.form-panel h2 {
+    margin-bottom: 20px;
+}
+
+.form-group-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.leave-form select,
+.leave-form input,
+.leave-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-family: inherit;
+}
+
+.leave-form label {
+    display: block;
+    font-size: 13px;
+    color: #475569;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.btn-submit {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 16px;
+    cursor: pointer;
+}
+
+.requests-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .requests-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.request-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.req-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.req-type-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.req-type {
+    font-weight: 600;
+    color: #334155;
+    background: #f1f5f9;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.status-badge.pending { background: #fef3c7; color: #b45309; }
+.status-badge.approved { background: #d1fae5; color: #047857; }
+.status-badge.rejected { background: #fee2e2; color: #b91c1c; }
+
+.req-dates {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.student-info-bar {
+    background: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 12px;
+}
+
+.req-reason {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.teacher-actions {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 12px;
+}
+
+.btn-approve, .btn-reject {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-approve { background: #d1fae5; color: #047857; }
+.btn-approve:hover { background: #a7f3d0; }
+
+.btn-reject { background: #fee2e2; color: #b91c1c; }
+.btn-reject:hover { background: #fecaca; }

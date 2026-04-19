@@ -116,4 +116,36 @@ async function updateStoredStats(date) {
     }
 }
 
+// @route   GET api/attendance/my-status/:date
+// @desc    Get attendance status for the logged-in student for a specific date
+router.get('/my-status/:date', auth, async (req, res) => {
+    try {
+        if (req.user.role !== 'student' && req.user.role !== 'parent') {
+            return res.status(403).json({ message: 'Access denied. Only students and parents can access this endpoint.' });
+        }
+
+        // The token contains req.user.id which is the User's _id
+        const user = await (await import('../models/User.js')).default.findById(req.user.id);
+        
+        if (!user || !user.studentId) {
+             return res.status(404).json({ message: 'Student profile not linked to this account.' });
+        }
+
+        const attendance = await Attendance.findOne({ 
+            date: req.params.date,
+            "records.studentId": user.studentId 
+        });
+
+        if (!attendance) {
+            return res.json({ status: 'No Record' });
+        }
+
+        const record = attendance.records.find(r => r.studentId.toString() === user.studentId.toString());
+        res.json({ status: record ? record.status : 'No Record' });
+
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 export default router;

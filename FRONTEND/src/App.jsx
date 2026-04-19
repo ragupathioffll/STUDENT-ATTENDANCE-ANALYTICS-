@@ -8,6 +8,10 @@ import Reports from './Components/Reports';
 import Login from './Components/Login';
 import { apiService } from './api/service';
 
+import StudentDashboard from './Components/StudentDashboard';
+import ParentDashboard from './Components/ParentDashboard';
+import LeaveRequests from './Components/LeaveRequests';
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!(localStorage.getItem('token') || sessionStorage.getItem('token'))
@@ -22,10 +26,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && user?.role !== 'student') {
       loadInitialData();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user?.role]);
 
   const loadInitialData = async () => {
     setIsLoading(true);
@@ -78,17 +82,27 @@ function App() {
   const renderContent = () => {
     if (isLoading) return <div className="loading-container">Loading data...</div>;
 
+    const isStudent = user?.role === 'student';
+    const isParent = user?.role === 'parent';
+
+    // Students and Parents only see their specific dashboards
+    if (isStudent) return <StudentDashboard user={user} />;
+    if (isParent) return <ParentDashboard user={user} />;
+
+    // Teachers follow the tab logic
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard />;
+        return <Dashboard students={students} attendanceData={attendanceData} onNavigate={setActiveTab} />;
       case 'students':
         return <Students students={students} setStudents={setStudents} />;
       case 'attendance':
         return <Attendance students={students} attendanceData={attendanceData} setAttendanceData={setAttendanceData} />;
       case 'reports':
         return <Reports />;
+      case 'leave':
+        return <LeaveRequests user={user} />;
       default:
-        return <Dashboard students={students} attendanceData={attendanceData} />;
+        return <Dashboard students={students} attendanceData={attendanceData} onNavigate={setActiveTab} />;
     }
   };
 

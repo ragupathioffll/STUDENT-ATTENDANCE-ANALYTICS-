@@ -1,7 +1,6 @@
 import express from 'express';
 import Student from '../models/Student.js';
 import Attendance from '../models/Attendance.js';
-import DailyStats from '../models/DailyStats.js';
 import auth from '../middleware/auth.js';
 
 const router = express.Router();
@@ -10,53 +9,80 @@ const router = express.Router();
 // @desc    Get dashboard statistics
 router.get('/stats', auth, async (req, res) => {
     try {
-        const { date } = req.query;
+        const { date, className } = req.query;
         const targetDate = date || new Date().toISOString().split('T')[0];
+        
+        let totalStudents = 0, presentCount = 0, absentCount = 0, averageAttendance = 0;
+        let chartData = []; // To hold last 7 days of data
 
-        let stats = await DailyStats.findOne({ date: targetDate });
+        // 1. Get filtered students
+        let studentQuery = {};
+        if (className && className !== 'All') {
+            studentQuery = { className };
+        }
+        const filteredStudents = await Student.find(studentQuery).select('_id');
+        const studentIds = filteredStudents.map(s => s._id.toString());
+        totalStudents = studentIds.length;
 
-        if (!stats) {
-            // Fallback to calculation if not found
-            const totalStudents = await Student.countDocuments();
-            const targetAttendance = await Attendance.findOne({ date: targetDate });
+        // 2. Get past 7 dates including targetDate
+        const dates = [];
+        const targetDateObj = new Date(targetDate);
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date(targetDateObj);
+            d.setDate(d.getDate() - i);
+            dates.push(d.toISOString().split('T')[0]);
+        }
 
-            let presentCount = 0;
-            let absentCount = 0;
+        // 3. Fetch attendance for these 7 days
+        const attendances = await Attendance.find({ date: { $in: dates } });
 
-            if (targetAttendance) {
-                targetAttendance.records.forEach(record => {
-                    if (record.status === 'Present') presentCount++;
-                    else if (record.status === 'Absent') absentCount++;
+        // Calculate chart data and today's stats
+        dates.forEach(d => {
+            const dayAttendance = attendances.find(a => a.date === d);
+            let dayTotal = 0;
+            let dayPresent = 0;
+
+            if (dayAttendance) {
+                dayAttendance.records.forEach(rec => {
+                    if (studentIds.includes(rec.studentId.toString())) {
+                        if (rec.status === 'Present' || rec.status === 'Absent') {
+                            dayTotal++;
+                            if (rec.status === 'Present') dayPresent++;
+                        }
+                        
+                        // If this is the target date, update today's counters
+                        if (d === targetDate) {
+                            if (rec.status === 'Present') presentCount++;
+                            if (rec.status === 'Absent') absentCount++;
+                        }
+                    }
                 });
             }
 
-            const allAttendance = await Attendance.find();
-            let totalPresent = 0;
-            let totalRecords = 0;
+            const dayPercentage = dayTotal > 0 ? Math.round((dayPresent / dayTotal) * 100) : 0;
+            
+            // Format date string for chart (e.g. "Apr 15")
+            const dateObj = new Date(d);
+            const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-            allAttendance.forEach(day => {
-                day.records.forEach(record => {
-                    if (record.status === 'Present' || record.status === 'Absent') {
-                        totalRecords++;
-                        if (record.status === 'Present') totalPresent++;
-                    }
-                });
+            chartData.push({
+                date: d,
+                percentage: dayPercentage
             });
+        });
 
-            stats = {
-                totalStudents,
-                presentCount,
-                absentCount,
-                attendancePercentage: totalRecords > 0 ? (totalPresent / totalRecords) * 100 : 0
-            };
-        }
+        // 4. Calculate average attendance for targetDate
+        averageAttendance = (presentCount + absentCount) > 0 
+            ? Math.round((presentCount / (presentCount + absentCount)) * 100) 
+            : 0;
 
         res.json({
-            totalStudents: stats.totalStudents,
-            presentToday: stats.presentCount,
-            absentToday: stats.absentCount,
-            averageAttendance: parseInt(stats.attendancePercentage || 0),
-            today: targetDate
+            totalStudents,
+            presentToday: presentCount,
+            absentToday: absentCount,
+            averageAttendance,
+            today: targetDate,
+            chartData
         });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });

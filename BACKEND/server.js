@@ -9,6 +9,8 @@ import studentRoutes from './routes/students.js';
 import attendanceRoutes from './routes/attendance.js';
 import dashboardRoutes from './routes/dashboard.js';
 import reportRoutes from './routes/reports.js';
+import leaveRoutes from './routes/leaveRequests.js';
+import announcementRoutes from './routes/announcements.js';
 
 dotenv.config();
 
@@ -58,6 +60,8 @@ app.use('/api/students', studentRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/leave-requests', leaveRoutes);
+app.use('/api/announcements', announcementRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

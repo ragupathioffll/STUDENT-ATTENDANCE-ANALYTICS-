@@ -1,66 +1,241 @@
-.reports-container {
+.reports-container-modern {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #1e293b;
+    padding-bottom: 40px;
 }
 
-.report-controls {
-    background-color: var(--card-background);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+/* Filters Card */
+.reports-filters-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.filters-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.filters-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
     flex-wrap: wrap;
-    gap: 20px;
 }
 
-.date-range-selector {
+.search-filter-box {
     display: flex;
     align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
+    gap: 8px;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 6px 12px;
+    flex: 1;
+    min-width: 200px;
 }
 
-.date-group {
+.search-filter-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.9rem;
+    color: #1e293b;
+}
+
+.class-filter-select, .date-filter-picker {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 8px 12px;
+    outline: none;
+    font-size: 0.9rem;
+    color: #475569;
+    background-color: #ffffff;
+}
+
+.status-toggles {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 4px;
+    background-color: #ffffff;
 }
 
-.date-group label {
+.toggle-pill {
+    padding: 6px 16px;
+    border-radius: 16px;
+    border: 1px solid #cbd5e1;
+    background: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.toggle-pill.active {
+    background-color: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+/* Table Card */
+.reports-table-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.table-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
     font-weight: 500;
-    color: var(--secondary-color);
 }
 
-.report-table-card {
-    background-color: var(--card-background);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+.student-count {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.table-responsive {
     overflow-x: auto;
 }
 
-.percentage-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 4px;
+.modern-report-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modern-report-table th {
+    text-align: left;
+    padding: 16px 24px;
+    font-size: 0.75rem;
     font-weight: 600;
-    font-size: 0.875rem;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #f8fafc;
 }
 
-.percentage-high {
-    background-color: rgba(40, 167, 69, 0.1);
-    color: var(--success-color);
+.modern-report-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
 }
 
-.percentage-medium {
-    background-color: rgba(255, 193, 7, 0.1);
-    color: #d39e00;
+.modern-report-table tr:last-child td { border-bottom: none; }
+
+.student-name-block {
+    display: flex;
+    flex-direction: column;
 }
 
-.percentage-low {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: var(--danger-color);
+.s-name { font-size: 0.9rem; color: #1e293b; font-weight: 500;}
+.s-id { font-size: 0.75rem; color: #94a3b8; }
+
+.class-pill {
+    background-color: #eff6ff;
+    color: #3b82f6;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
 }
+
+.text-green-number { color: #10b981; font-weight: 500; font-size: 0.9rem; }
+.text-red-number { color: #ef4444; font-weight: 500; font-size: 0.9rem; }
+.text-yellow-number { color: #eab308; font-weight: 500; font-size: 0.9rem; }
+
+.att-progress-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.att-progress-bar {
+    width: 60px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: #f1f5f9;
+    overflow: hidden;
+}
+
+.att-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+}
+
+.bg-green { background-color: #10b981; }
+.bg-yellow { background-color: #eab308; }
+.bg-red { background-color: #ef4444; }
+
+.att-perc-value { font-size: 0.85rem; font-weight: 500; color: #475569; }
+
+.status-pill {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-green { background-color: #ecfdf5; color: #10b981; }
+.status-yellow { background-color: #fefce8; color: #eab308; }
+.status-red { background-color: #fef2f2; color: #ef4444; }
+
+.trend-icon { font-size: 1rem; font-weight: bold; }
+
+/* Summary Cards Row */
+.summary-cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.summary-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.summary-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.sum-label { font-size: 0.85rem; color: #64748b; margin-bottom: 8px;}
+.sum-value { font-size: 1.75rem; font-weight: 600; margin-bottom: 4px;}
+.sum-sub { font-size: 0.75rem; color: #94a3b8; }
+
+.text-blue { color: #3b82f6; }
+
+.sum-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-blue-soft { background-color: #eff6ff; }
+.bg-green-soft { background-color: #ecfdf5; }
+.bg-red-soft { background-color: #fef2f2; }

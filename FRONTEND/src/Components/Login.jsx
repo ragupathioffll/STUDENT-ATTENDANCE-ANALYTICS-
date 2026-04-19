@@ -1,26 +1,57 @@
 import React, { useState } from 'react';
-import { GraduationCap, Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { GraduationCap, Mail, Lock, AlertCircle, Eye, EyeOff, User, Hash, BookOpen } from 'lucide-react';
 import { apiService } from '../api/service';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [isLogin, setIsLogin] = useState(true);
+    const [role, setRole] = useState('teacher'); // default to teacher
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        rollNo: '', // For student only
+    });
     const [error, setError] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
+    const toggleMode = () => {
+        setIsLogin(!isLogin);
+        setError('');
+        setSuccessMsg('');
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         setError('');
+        setSuccessMsg('');
 
         try {
-            const data = await apiService.login(email, password);
-            onLogin(data, rememberMe);
+            if (isLogin) {
+                const data = await apiService.login(formData.email, formData.password);
+                onLogin(data, rememberMe);
+            } else {
+                // Registration
+                const payload = {
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                    role: 'teacher'
+                };
+                const res = await apiService.register(payload);
+                setSuccessMsg(res.message || 'Registration successful! You can now sign in.');
+                setIsLogin(true); // Switch to login view
+            }
         } catch (err) {
-            setError(err.message || 'Invalid email or password');
+            setError(err.message || (isLogin ? 'Invalid credentials' : 'Registration failed'));
         } finally {
             setIsLoading(false);
         }
@@ -33,23 +64,42 @@ const Login = ({ onLogin }) => {
                     <GraduationCap size={40} color="#ffffff" />
                 </div>
                 <h1>Student Attendance</h1>
-                <p className="subtitle">Analytics Platform for Teachers</p>
+                <p className="subtitle">Unified Analytics Platform</p>
             </div>
 
             <div className="login-card">
-                <h2>Welcome Back</h2>
+                <h2>{isLogin ? 'Welcome Back' : 'Create an Account'}</h2>
+
 
                 <form onSubmit={handleSubmit} className="login-form">
+                    {!isLogin && (
+                        <div className="form-group">
+                            <label htmlFor="name">Full Name</label>
+                            <div className="input-wrapper">
+                                <User className="input-icon" size={20} />
+                                <input
+                                    type="text"
+                                    id="name"
+                                    placeholder="John Doe"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                    )}
+
+
                     <div className="form-group">
-                        <label htmlFor="email">User ID / Email Address</label>
+                        <label htmlFor="email">Email Address</label>
                         <div className="input-wrapper">
                             <Mail className="input-icon" size={20} />
                             <input
                                 type="email"
                                 id="email"
-                                placeholder="admin@school.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder={isLogin ? "user@example.com" : "teacher@school.com"}
+                                value={formData.email}
+                                onChange={handleInputChange}
                                 required
                             />
                         </div>
@@ -63,8 +113,8 @@ const Login = ({ onLogin }) => {
                                 type={showPassword ? "text" : "password"}
                                 id="password"
                                 placeholder="••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={formData.password}
+                                onChange={handleInputChange}
                                 required
                             />
                             <button
@@ -78,16 +128,18 @@ const Login = ({ onLogin }) => {
                         </div>
                     </div>
 
-                    <div className="form-options">
-                        <label className="remember-me">
-                            <input
-                                type="checkbox"
-                                checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.target.checked)}
-                            />
-                            <span>Remember me</span>
-                        </label>
-                    </div>
+                    {isLogin && (
+                        <div className="form-options">
+                            <label className="remember-me">
+                                <input
+                                    type="checkbox"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                />
+                                <span>Remember me</span>
+                            </label>
+                        </div>
+                    )}
 
                     {error && (
                         <div className="error-message">
@@ -96,9 +148,26 @@ const Login = ({ onLogin }) => {
                         </div>
                     )}
 
+                    {successMsg && (
+                        <div className="success-message" style={{ color: 'green', display: 'flex', alignItems: 'center', gap: '8px', padding: '10px', backgroundColor: '#e6ffe6', borderRadius: '6px', marginBottom: '15px' }}>
+                            <span>{successMsg}</span>
+                        </div>
+                    )}
+
                     <button type="submit" className="login-button" disabled={isLoading}>
-                        {isLoading ? 'Signing In...' : 'Sign In'}
+                        {isLoading 
+                            ? (isLogin ? 'Signing In...' : 'Registering...') 
+                            : (isLogin ? 'Sign In' : 'Sign Up')}
                     </button>
+                    
+                    <div className="toggle-mode-container" style={{ textAlign: 'center', marginTop: '15px' }}>
+                        <span style={{ color: '#6b7280' }}>
+                            {isLogin ? "Don't have an account? " : "Already have an account? "}
+                        </span>
+                        <button type="button" className="text-btn" onClick={toggleMode} style={{ background: 'none', border: 'none', color: '#4f46e5', fontWeight: '500', cursor: 'pointer' }}>
+                            {isLogin ? 'Sign Up' : 'Sign In'}
+                        </button>
+                    </div>
                 </form>
             </div>
 
